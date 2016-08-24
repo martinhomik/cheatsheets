@@ -242,3 +242,179 @@ If you want from a particular line to the very end then:
 ```sh
 sed -n '320123,$'p filename 
 ```
+
+## Curl
+
+```sh
+curl -X GET http://domrec.1and1.com/domrec/monitor/ping
+```
+
+```sh
+curl -H "Content-Type: application/json"  -H "Accept: application/xml" -X POST -d '{"query":"blafasela","country":"de","optional":{"name":["Foo"],"lastname":["Bar"]},"pageSize":"5","pageOffset":"0"}' http://somedomain/somepath
+```
+
+## whatis 'keyword'
+
+Der Befehl whatis dient dazu, eine sehr knappe, einzeilige Beschreibung eines bestimmten Befehls anzuzeigen.
+
+## apropos 'keyword'
+Mit dem Befehl apropos entlocken Sie der Hilfe etwas mehr an Informationen über den gesuchten Terminalbefehl.
+
+## Test net connectivity:
+```sh
+nc -zv hoebwa3mwdev.mw.server.lan 10080
+```
+
+## Measure run time of a shell command
+```sh
+time <command>
+```
+
+## Shell Scripts
+* Parameter Evaluation: 
+  * See Elasticsearch startup /usr/share/elasticsearch/bin
+  * See Tomcat startup
+
+```sh
+  # Print command line usage / help
+usage() {
+    echo "Usage: $0 [-vdh] [-p pidfile] [-D prop] [-X prop]"
+    echo "Start elasticsearch."
+    echo "    -d            daemonize (run in background)"
+    echo "    -p pidfile    write PID to <pidfile>"
+    echo "    -h"
+    echo "    --help        print command line options"
+    echo "    -v            print elasticsearch version, then exit"
+    echo "    -D prop       set JAVA system property"
+    echo "    -X prop       set non-standard JAVA system property"
+    echo "   --prop=val"
+    echo "   --prop val     set elasticsearch property (i.e. -Des.<prop>=<val>)"
+}
+
+# Parse any long getopt options and put them into properties before calling getopt below
+# Be dash compatible to make sure running under ubuntu works
+ARGV=""
+while [ $# -gt 0 ]
+do
+    case $1 in
+      --help) ARGV="$ARGV -h"; shift;;
+      --*=*) properties="$properties -Des.${1#--}"
+           shift 1
+           ;;
+      --*) [ $# -le 1 ] && {
+                echo "Option requires an argument: '$1'."
+                shift
+                continue
+            }
+           properties="$properties -Des.${1#--}=$2"
+           shift 2
+           ;;
+      *) ARGV="$ARGV $1" ; shift
+    esac
+done
+
+
+
+# Parse any command line options.
+args=`getopt vdhp:D:X: $ARGV`
+eval set -- "$args"
+
+while true; do
+    case $1 in
+        -v)
+            "$JAVA" $JAVA_OPTS $ES_JAVA_OPTS $es_parms -Des.path.home="$ES_HOME" -cp "$ES_CLASSPATH" $props \
+                    org.elasticsearch.Version
+            exit 0
+        ;;
+        -p)
+            pidfile="$2"
+            shift 2
+        ;;
+        -d)
+            daemonized="yes"
+            shift
+        ;;
+        -h)
+            usage
+            exit 0
+        ;;
+        -D)
+            properties="$properties -D$2"
+            shift 2
+        ;;
+        -X)
+            properties="$properties -X$2"
+            shift 2
+        ;;
+        --)
+            shift
+            break
+        ;;
+        *)
+            echo "Error parsing argument $1!" >&2
+            usage
+            exit 1
+        ;;
+    esac
+done
+
+# Start up the service
+launch_service "$pidfile" "$daemonized" "$properties"
+
+exit $?
+```
+
+
+Alternative:
+
+
+```sh
+while [ "$1" != "" ]; do
+    case $1 in
+        -d | --date )           
+            shift
+            p_date=$1
+            ;;
+        -c | --continent )      
+            shift
+            if [ "$1" = "EU" ] || [ "$1" = "US" ]; then
+                p_continent="$1"
+            else
+                echo "No valid cluster location. Only EU and US are allowed!"
+                exit
+            fi
+            ;;
+        -o | --outputdir)
+            shift
+            p_outputdir="$1"
+            ;;    
+        -h | --help )           
+            usage
+            exit
+            ;;
+        * )                     
+            usage
+            exit 1
+    esac
+    shift
+done
+```
+
+
+## Extract Template name from Template URL
+
+```sh
+cut -f 6 any_configuration_20160610_112122.csv | grep  "(?<=/download/templates/(?:text|doc))/.*"
+```
+
+## Suppress output when starting a process
+
+```sh
+dashing start > /dev/null 2>&1
+```
+
+## Summing up values of a CSV file by column
+
+```sh
+awk '{s+=$1} END {print s}' mydatafile
+```
