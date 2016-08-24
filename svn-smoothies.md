@@ -1,4 +1,4 @@
-## Svn: Find last 50 commits by mhomik
+## Find last 50 commits by mhomik
 ```=
 svn log --search mhomik -l 50
 ```
