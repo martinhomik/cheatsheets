@@ -133,3 +133,91 @@ or
 ```  
 pkill -f "airflow"
 ````
+
+## Tree view of files and folders:
+Download tree from homebrew
+```
+tree -L 2
+````
+
+## Watch: execute a program periodically, showing output fullscreen
+Watch thread pool statistics of elasticsearch every 2 seconds
+```
+watch -n 2 "curl -s localhost:9200/_cat/thread_pool"
+```
+* n : time intervall in seconds
+* s: silent mode in curl. No Download information.
+	 
+To watch the contents of a directory change, you could use
+```
+watch -d ls -l
+````
+
+## PSSH: parallel ssh program
+Check the health of hosts in a cluster
+```
+pssh -i -h list.of.cluster.hosts curl -s localhost:9200/_cat/health
+```
+
+## ClusterSSH
+
+TODO
+
+## chmod
+
+7 = all rights
+6 = read and write
+5 = read and execute
+4 = read only
+3 = execute and write
+2 = write only
+1 = execute only
+0 = no rights
+
+
+### To recursively give directories read&execute privileges:
+
+```
+find /path/to/base/dir -type d -exec chmod 755 {} +
+```
+
+### To recursively give files read privileges:
+```
+find /path/to/base/dir -type f -exec chmod 644 {} +
+```
+
+### Or, if there are many objects to process:
+```
+chmod 755 $(find /path/to/base/dir -type d)
+chmod 644 $(find /path/to/base/dir -type f)
+```
+Or, to reduce chmod spawning:
+```
+find /path/to/base/dir -type d -print0 | xargs -0 chmod 755 
+find /path/to/base/dir -type f -print0 | xargs -0 chmod 644
+```
+Alternative:
+```
+chmod -R u+rwX,go+rX,go-w /path
+```
+Meaning:
+
+    -R = recursively;
+    u+rwX = Users can read, write and execute;
+    go+rX = group and others can read and execute;
+    go-w = group and others can't write
+
+
+## Going to a specific line number using Less in Unix:
+```
+sed -n '320123'p filename 
+````
+
+If you want a range then you can:
+```
+sed -n '320123,320150'p filename 
+```
+If you want from a particular line to the very end then:
+```
+sed -n '320123,$'p filename 
+```
