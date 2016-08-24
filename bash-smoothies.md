@@ -165,14 +165,14 @@ TODO
 
 ## chmod
 
-7 = all rights
-6 = read and write
-5 = read and execute
-4 = read only
-3 = execute and write
-2 = write only
-1 = execute only
-0 = no rights
+    7 = all rights
+    6 = read and write
+    5 = read and execute
+    4 = read only
+    3 = execute and write
+    2 = write only
+    1 = execute only
+    0 = no rights
 
 
 ### To recursively give directories read&execute privileges:
@@ -202,10 +202,10 @@ chmod -R u+rwX,go+rX,go-w /path
 ```
 Meaning:
 
-    -R = recursively;
+    -R    = recursively;
     u+rwX = Users can read, write and execute;
     go+rX = group and others can read and execute;
-    go-w = group and others can't write
+    go-w  = group and others can't write
 
 
 ## Going to a specific line number using Less in Unix:
