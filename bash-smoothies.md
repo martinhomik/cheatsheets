@@ -74,3 +74,62 @@ find . -name 'pom.xml' -exec grep -H "4.10.20-SNAPSHOT" {} \;
 ```
 cat report_2015-11-25_2015-11-25.csv | awk -F "\t" '{print $4"\t"$0}' | sort | cut -f 2- > report_2015-11-26_2015-11-26.csv.sorted
 ```
+
+## Login as root with wvqyec AMPUA password
+```
+sudu su -
+````
+
+## Applications on Ubuntu:
+```
+/usr/lib/hive
+/var/lib/hive
+/etc/hive	
+````
+
+## Linux Service start, stop, restart
+```
+service hive-server2 start|stop|restart
+````
+
+## List all files in long format, order by modification time descending
+```
+ls -latr
+```
+
+## Print value of a symbolic link or canonical file name
+```
+readlink -f /usr/lib/hive/lib/libmysql-java.jar
+--> follows recursively all sybolic links down to target file
+```
+
+
+## Put a job into background:
+```
+CTRL+Z
+````
+
+## Get a job into the foreground:
+```
+fg
+````
+
+## List all running jobs:
+```
+jobs
+````
+
+## Kill first job after calling 'jobs':
+```
+kill %1 
+````
+
+## Kill all jobs mathing a name
+```
+ps -ef | grep "airflow" | grep -v grep | awk '{print $2}' | xargs kill -9
+```
+or
+  
+```  
+pkill -f "airflow"
+````
