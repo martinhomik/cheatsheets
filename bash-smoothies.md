@@ -418,3 +418,8 @@ dashing start > /dev/null 2>&1
 ```sh
 awk '{s+=$1} END {print s}' mydatafile
 ```
+
+## Install a Debian package
+```sh
+dpkg -i /home/myuser/myproject_1.0.0-SNAPSHOT_all.deb
+```
