@@ -38,6 +38,14 @@ One way in which du can be used to produce a list of (mostly) directories and fi
 du -ah | grep M
 ```
 
+## Date functions
+
+Get current timestamp:
+
+```sh
+date +%s
+```
+
 ## Load testing from console
 
 ```sh
